@@ -1,4 +1,4 @@
-window._ = require('lodash');
+window._ = require("lodash");
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -6,44 +6,37 @@ window._ = require('lodash');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = require("axios");
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+import Echo from "laravel-echo";
 
-// import Echo from 'laravel-echo';
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
-
-import Echo from "laravel-echo"
-
-window.io = require('socket.io-client');
+window.io = require("socket.io-client");
 
 window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+    broadcaster: "socket.io",
+    host: window.location.hostname + ":6001",
 });
 
 window.Echo.join(`chat`)
     .here((users) => {
-        console.log("here", users)
+        let user_id = $("meta[name=user_id]").attr("content");
+
+        users.forEach((user) => {
+            if (user.id != user_id)
+                //to skip adding the same logged in user
+                $("#online-users").append(
+                    `<li class="list-group-item" id="user-${user.id}">${user.name}</li>`
+                );
+        });
+        console.log("here", users);
     })
     .joining((user) => {
-        console.log(user.name);
+        $("#online-users").append(
+            `<li class="list-group-item" id="user-${user.id}">${user.name}</li>`
+        );
     })
     .leaving((user) => {
-        console.log(user.name);
-    })
-    
+        $(`#user-${user.id}`).remove();
+    });

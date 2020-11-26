@@ -6,10 +6,7 @@
        <div class="col-md-3 bg" id="chat-users">
            <h4>Online Users</h4>
            <hr>
-           <ul class="list-group" id="online users">
-               <li class="list-group-item ">Active item</li>
-               <li class="list-group-item">Item</li>
-               <li class="list-group-item disabled">Disabled item</li>
+           <ul class="list-group" id="online-users">
            </ul>
        </div>
        <div class="col-md-9 bg-dark d-flex flex-column" style="height: 80vh;" >

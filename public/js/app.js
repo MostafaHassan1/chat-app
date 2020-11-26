@@ -29602,33 +29602,24 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-// import Echo from 'laravel-echo';
-// window.Pusher = require('pusher-js');
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
-
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
+  broadcaster: "socket.io",
+  host: window.location.hostname + ":6001"
 });
 window.Echo.join("chat").here(function (users) {
+  var user_id = $("meta[name=user_id]").attr("content");
+  users.forEach(function (user) {
+    if (user.id != user_id) //to skip adding the same logged in user
+      $("#online-users").append("<li class=\"list-group-item\" id=\"user-".concat(user.id, "\">").concat(user.name, "</li>"));
+  });
   console.log("here", users);
 }).joining(function (user) {
-  console.log(user.name);
+  $("#online-users").append("<li class=\"list-group-item\" id=\"user-".concat(user.id, "\">").concat(user.name, "</li>"));
 }).leaving(function (user) {
-  console.log(user.name);
+  $("#user-".concat(user.id)).remove();
 });
 
 /***/ }),
