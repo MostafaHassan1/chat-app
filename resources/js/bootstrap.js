@@ -40,3 +40,28 @@ window.Echo.join(`chat`)
     .leaving((user) => {
         $(`#user-${user.id}`).remove();
     });
+    
+$('#chat-input').keypress(function(e){
+        if(e.which == 13){
+           let body = $(this).val()
+           let data = {
+               "_token" : $("meta[name=csrf-token]").attr("content"),
+               body
+           }
+           $.ajax({
+               type: "POST",
+               url: $(this).data('url'),
+               data: data,
+               success: function (response) {
+                   $('#chat-box').append(`
+                   <div class="mt-3 w-auto p-3 text-white rounded align-self-end bg-primary">
+        
+                   <p>${data.body}</p>
+       
+               </div>
+               <div class="clearfix"></div>
+               `)
+               }
+           });
+        }
+    })

@@ -23,7 +23,7 @@
         
                 @foreach ($messages as $message)
         
-                <div class="mt-5 w-auto p-3 text-white rounded {{auth()->user()->id == $message->user_id ? ' align-self-end bg-primary' : ' align-self-start bg-warning'}}">
+                <div class="mt-3 w-auto p-3 text-white rounded {{auth()->user()->id == $message->user_id ? ' align-self-end bg-primary' : ' align-self-start bg-warning'}}">
         
                     <p>{{$message->body}}</p>
         
@@ -36,7 +36,7 @@
         
             <div id="chat-form" class="d-flex m-4">
         
-                <input type="text" class="form-control mr-2" placeholder="Write your message">
+            <input type="text" data-url="{{route('messages.store')}}" id="chat-input"  class="form-control mr-2" placeholder="Write your message">
         
                 <button class="btn btn-primary">Send</button>
         

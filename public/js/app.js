@@ -29621,6 +29621,23 @@ window.Echo.join("chat").here(function (users) {
 }).leaving(function (user) {
   $("#user-".concat(user.id)).remove();
 });
+$('#chat-input').keypress(function (e) {
+  if (e.which == 13) {
+    var body = $(this).val();
+    var data = {
+      "_token": $("meta[name=csrf-token]").attr("content"),
+      body: body
+    };
+    $.ajax({
+      type: "POST",
+      url: $(this).data('url'),
+      data: data,
+      success: function success(response) {
+        $('#chat-box').append("\n                   <div class=\"mt-3 w-auto p-3 text-white rounded align-self-end bg-primary\">\n        \n                   <p>".concat(data.body, "</p>\n       \n               </div>\n               <div class=\"clearfix\"></div>\n               "));
+      }
+    });
+  }
+});
 
 /***/ }),
 

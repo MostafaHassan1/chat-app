@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
+
 class MessageController extends Controller
 {
     /**
@@ -23,7 +25,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +36,7 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Message::create(array_merge($request->all(),['user_id'=> Auth::user()->id]));
     }
 
     /**
